@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-background: #fafafa;
+  --color-foreground: #18181b;
+  --color-muted: #52525b;
+  --color-accent: #2563eb;
+  --color-accent-foreground: #fafafa;
+  --color-border: #e4e4e7;
+}
+
+.dark {
+  --color-background: #0a0a0b;
+  --color-foreground: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-accent: #3b82f6;
+  --color-accent-foreground: #0a0a0b;
+  --color-border: #27272a;
+}
+
+@theme inline {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-muted: var(--color-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-border: var(--color-border);
+  --font-heading: var(--font-space-grotesk);
+  --font-body: var(--font-dm-sans);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body), sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading), sans-serif;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

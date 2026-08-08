@@ -1,0 +1,30 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# raw source documents (resume/papers with personal info) — not meant to be public
+/_inbox
+
+# python bytecode
+__pycache__/
+*.pyc
+
+# env
+.env*
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# logs
+npm-debug.log*

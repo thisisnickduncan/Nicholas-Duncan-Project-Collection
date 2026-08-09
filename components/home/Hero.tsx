@@ -6,15 +6,15 @@ import { profile } from "@/data/profile";
 
 export function Hero() {
   return (
-    <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pb-16 pt-36 sm:px-6 sm:pt-44 lg:grid-cols-12 lg:gap-4 lg:pb-24">
+    <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pb-16 pt-36 sm:px-6 sm:pt-44 lg:grid-cols-12 lg:items-center lg:gap-4 lg:pb-24">
       <div className="lg:col-span-9">
         <SplitText
           as="h1"
           text={profile.name}
           className="text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[1.05] tracking-tight"
         />
-        <RevealOnScroll delay={0.5} className="mt-8 max-w-xl text-lg text-muted">
-          {profile.oneLineBio}
+        <RevealOnScroll delay={0.5} className="mt-6 text-sm text-muted">
+          <span className="text-foreground">{profile.location}</span>
         </RevealOnScroll>
         <RevealOnScroll delay={0.65} className="mt-8">
           <HoverLink href="/work" className="text-sm font-medium">
@@ -35,10 +35,6 @@ export function Hero() {
               priority
             />
           </div>
-        </RevealOnScroll>
-
-        <RevealOnScroll delay={0.5} className="mt-6 text-sm text-muted lg:text-right">
-          <p className="text-foreground">{profile.location}</p>
         </RevealOnScroll>
       </div>
     </section>

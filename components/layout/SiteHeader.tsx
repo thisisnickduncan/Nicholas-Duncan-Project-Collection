@@ -10,6 +10,7 @@ export function SiteHeader() {
         </HoverLink>
         <nav className="flex items-center gap-6 text-sm">
           <HoverLink href="/work">Work</HoverLink>
+          <HoverLink href="/#contact">Contact</HoverLink>
           <HoverLink href="/about">About</HoverLink>
           <ThemeToggle />
         </nav>

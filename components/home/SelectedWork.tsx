@@ -7,7 +7,7 @@ export function SelectedWork() {
   const featured = projects.slice(0, 4);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <section className="mx-auto max-w-6xl border-t border-border px-4 py-16 sm:px-6 sm:py-24">
       <div className="flex items-end justify-between gap-4">
         <RevealOnScroll as="div">
           <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Selected Work</h2>

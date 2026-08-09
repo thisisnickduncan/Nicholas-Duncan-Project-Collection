@@ -26,6 +26,7 @@ export interface Profile {
   photo: string;
   location: string;
   email: string;
+  phone: string;
   linkedinUrl: string;
   githubUrl: string;
   resumeUrl: string;
@@ -48,6 +49,7 @@ export const profile: Profile = {
   photo: "/images/nick-duncan-cutout.png",
   location: "Laguna Niguel, CA",
   email: "thisisnickduncan@gmail.com",
+  phone: "(949) 357-8629",
   linkedinUrl: "https://www.linkedin.com/in/nicholas-duncan-a8341a272",
   githubUrl: "https://github.com/thisisnickduncan",
   resumeUrl: "/resume.pdf",

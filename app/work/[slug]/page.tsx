@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { CaseStudyHeader } from "@/components/work/CaseStudyHeader";
 import { CaseStudySection } from "@/components/work/CaseStudySection";
 import { CaseStudyNav } from "@/components/work/CaseStudyNav";
-import { ContactBlock } from "@/components/contact/ContactBlock";
+import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 import { projects, getProjectBySlug } from "@/data/projects";
 
 export function generateStaticParams() {
@@ -31,6 +31,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   return (
     <>
+      <ScrollProgressBar />
       <CaseStudyHeader project={project} />
       <CaseStudySection index="01" label="Problem">
         <p>{project.problem}</p>
@@ -56,7 +57,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         )}
       </CaseStudySection>
       <CaseStudyNav currentSlug={project.slug} />
-      <ContactBlock />
     </>
   );
 }

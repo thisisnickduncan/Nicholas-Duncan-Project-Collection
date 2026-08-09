@@ -23,6 +23,7 @@ export interface Profile {
   tagline: string;
   oneLineBio: string;
   bioParagraphs: string[];
+  photo: string;
   location: string;
   email: string;
   linkedinUrl: string;
@@ -44,6 +45,7 @@ export const profile: Profile = {
     "I built SwingScore, a Python/Flask data application using Pandas and SQL concepts to analyze election data — one example of how I like to work: take a messy, real-world dataset and turn it into something people can actually use to make decisions.",
     "I'm skilled in problem-solving, systems analysis, technical documentation, and data-driven decision-making, and I'm looking for a full-time role in IT, project management, data/business analysis, or cybersecurity.",
   ],
+  photo: "/images/nick-duncan-cutout.png",
   location: "Laguna Niguel, CA",
   email: "thisisnickduncan@gmail.com",
   linkedinUrl: "https://www.linkedin.com/in/nicholas-duncan-a8341a272",

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SplitText } from "@/components/ui/SplitText";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { HoverLink } from "@/components/ui/HoverLink";
@@ -9,8 +10,8 @@ export function Hero() {
       <div className="lg:col-span-9">
         <SplitText
           as="h1"
-          text={profile.tagline}
-          className="text-[clamp(2.25rem,6.5vw,5.5rem)] font-semibold leading-[1.05] tracking-tight"
+          text={profile.name}
+          className="text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[1.05] tracking-tight"
         />
         <RevealOnScroll delay={0.5} className="mt-8 max-w-xl text-lg text-muted">
           {profile.oneLineBio}
@@ -22,16 +23,24 @@ export function Hero() {
         </RevealOnScroll>
       </div>
 
-      <RevealOnScroll delay={0.4} className="flex flex-col gap-6 text-sm text-muted lg:col-span-3 lg:items-end lg:text-right">
-        <div>
+      <div className="lg:col-span-3">
+        <RevealOnScroll delay={0.3} className="relative ml-auto w-40 sm:w-48 lg:w-full">
+          <div className="relative aspect-[1171/1168] w-full">
+            <Image
+              src={profile.photo}
+              alt={profile.name}
+              fill
+              sizes="(min-width: 1024px) 20vw, 40vw"
+              className="object-contain object-bottom"
+              priority
+            />
+          </div>
+        </RevealOnScroll>
+
+        <RevealOnScroll delay={0.5} className="mt-6 text-sm text-muted lg:text-right">
           <p className="text-foreground">{profile.location}</p>
-          <p>Open to full-time roles</p>
-        </div>
-        <div>
-          <p className="text-foreground">Targeting</p>
-          <p>IT &middot; PM &middot; Data &middot; Security</p>
-        </div>
-      </RevealOnScroll>
+        </RevealOnScroll>
+      </div>
     </section>
   );
 }

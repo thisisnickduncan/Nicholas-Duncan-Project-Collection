@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { ProjectRow } from "@/components/work/ProjectRow";
-import { projects, type ProjectCategory } from "@/data/projects";
+import { projects, categoryLabel, type ProjectCategory } from "@/data/projects";
 
 const categories: ProjectCategory[] = ["IT", "PM", "Data", "Security"];
 
@@ -25,7 +25,7 @@ export function ProjectIndex() {
               active === cat ? "border-accent text-accent" : "border-transparent text-muted hover:text-foreground"
             }`}
           >
-            {cat}
+            {cat === "All" ? cat : categoryLabel(cat)}
           </button>
         ))}
       </div>

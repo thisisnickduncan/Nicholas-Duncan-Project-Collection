@@ -1,7 +1,8 @@
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { HoverLink } from "@/components/ui/HoverLink";
 import { ProjectVisual } from "@/components/ui/ProjectVisual";
-import type { Project } from "@/data/projects";
+import { IframeEmbed } from "@/components/work/IframeEmbed";
+import { categoryLabel, type Project } from "@/data/projects";
 
 export function CaseStudyHeader({ project }: { project: Project }) {
   return (
@@ -40,12 +41,8 @@ export function CaseStudyHeader({ project }: { project: Project }) {
             <p className="mt-1">{project.role}</p>
           </div>
           <div>
-            <p className="text-muted">Timeframe</p>
-            <p className="mt-1">{project.timeframe}</p>
-          </div>
-          <div>
             <p className="text-muted">Category</p>
-            <p className="mt-1">{project.category}</p>
+            <p className="mt-1">{categoryLabel(project.category)}</p>
           </div>
           <div>
             <p className="text-muted">Tools</p>
@@ -54,9 +51,19 @@ export function CaseStudyHeader({ project }: { project: Project }) {
         </RevealOnScroll>
       </div>
 
-      <RevealOnScroll delay={0.25} className="mt-12 aspect-[16/9] w-full">
-        <ProjectVisual slug={project.slug} alt={project.title} image={project.image} className="h-full w-full" />
-      </RevealOnScroll>
+      {project.paperUrl ? (
+        <RevealOnScroll delay={0.25} className="mt-12 w-full">
+          <IframeEmbed src={project.paperUrl} title={`${project.title} — full paper`} linkLabel="Download PDF" />
+        </RevealOnScroll>
+      ) : project.demoUrl ? (
+        <RevealOnScroll delay={0.25} className="mt-12 w-full">
+          <IframeEmbed src={project.demoUrl} title={`${project.title} — live demo`} linkLabel="Open live demo" />
+        </RevealOnScroll>
+      ) : (
+        <RevealOnScroll delay={0.25} className="mt-12 aspect-[16/9] w-full">
+          <ProjectVisual slug={project.slug} alt={project.title} image={project.image} className="h-full w-full" />
+        </RevealOnScroll>
+      )}
     </header>
   );
 }

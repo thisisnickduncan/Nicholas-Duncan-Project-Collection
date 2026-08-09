@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Tag } from "@/components/ui/Tag";
-import type { Project } from "@/data/projects";
+import { categoryLabel, type Project } from "@/data/projects";
 
 export function ProjectRow({ project, index }: { project: Project; index: number }) {
   return (
@@ -18,7 +18,7 @@ export function ProjectRow({ project, index }: { project: Project; index: number
         </h3>
         <p className="mt-2 max-w-md text-sm text-muted">{project.oneLiner}</p>
         <div className="mt-3 flex flex-wrap gap-2">
-          <Tag>{project.category}</Tag>
+          <Tag>{categoryLabel(project.category)}</Tag>
         </div>
       </div>
 

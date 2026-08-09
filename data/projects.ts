@@ -101,6 +101,48 @@ export const projects: Project[] = [
       { label: "Year 1 net profit (projected)", value: "$13,740" },
     ],
   },
+  {
+    slug: "central-campus-parking-redevelopment",
+    title: "Central Campus Parking Redevelopment",
+    oneLiner: "A feasibility study and project management plan to replace a UH Mānoa surface lot with a smart, multi-level parking structure.",
+    category: "PM",
+    role: "Project Management Plan Author (Group 4)",
+    timeframe: "ITM 321, Spring 2026",
+    tools: ["Work Breakdown Structure", "Requirements Traceability Matrix", "Risk Register", "Swimlane Diagrams"],
+    problem:
+      "UH Mānoa's central academic core — the surface lot between Shidler College of Business, George Hall, and the Architecture Building — was operating near full occupancy during peak hours, with commuter student permits selling out multiple semesters, while the lot itself used high-value land at low density.",
+    approach:
+      "Built a full feasibility case using the university's own transportation data, then developed a scope statement, a 26-item requirements matrix with traceability, risk register with mitigations, a six-phase work breakdown structure, and a 30-month milestone timeline for replacing the surface lot with a smart, multi-level parking structure.",
+    outcome: [
+      "Proposed a 4-level structure replacing roughly 70–100 surface spaces with an estimated 320, without requiring new land acquisition.",
+      "Defined a phased path from feasibility through design, permitting, construction, testing, deployment, and closeout, with risk mitigations for budget overrun, construction-period parking loss, and stakeholder resistance.",
+    ],
+    outcomeMetrics: [
+      { label: "Net capacity gain", value: "~70-100 → 320 spaces" },
+      { label: "Estimated project cost", value: "$13M–$18M" },
+    ],
+  },
+  {
+    slug: "boeing-balanced-scorecard",
+    title: "Boeing Safety & Quality Turnaround: Balanced Scorecard Strategy",
+    oneLiner: "A consulting recommendation for Boeing's Board to fix safety and quality control before scaling production again.",
+    category: "PM",
+    role: "Strategy Consultant (Escape Velocity Partners team)",
+    timeframe: "BUS 345",
+    tools: ["Balanced Scorecard (Kaplan & Norton)", "Strategy Mapping", "Case Analysis"],
+    problem:
+      "Following the 737 MAX crashes, the Alaska Airlines door-plug incident, and FAA production restrictions, Boeing kept declaring safety and quality as priorities without its operating processes, incentives, supplier oversight, or culture actually reflecting that commitment — a strategy execution failure, not just a communications or engineering problem.",
+    approach:
+      "Diagnosed the crisis as systemic rather than isolated, then built a four-perspective Balanced Scorecard adapted for aviation — Learning & Growth, Internal Processes, Customer & Regulator Trust, and Financial Recovery — with a strategy map showing how safety culture has to precede process quality, which has to precede regulator trust, which has to precede financial recovery.",
+    outcome: [
+      "Recommended five board-level actions: a safety-first scorecard dashboard, full integration of Spirit AeroSystems into one Boeing-controlled quality system, tying production increases to quality gates, realigning executive incentives around safety over speed, and strengthening employee stop-the-line and reporting protections.",
+      "Laid out a phased 24-month rollout — freeze unsafe scaling and baseline metrics in the first 90 days, integrate Spirit and standardize quality in months 3–6, then institutionalize the scorecard into annual planning through month 24.",
+    ],
+    outcomeMetrics: [
+      { label: "Board recommendations", value: "5" },
+      { label: "Implementation phases", value: "90-day / 6-mo / 24-mo" },
+    ],
+  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {

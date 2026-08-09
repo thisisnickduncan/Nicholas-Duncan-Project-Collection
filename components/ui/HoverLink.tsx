@@ -6,10 +6,11 @@ interface HoverLinkProps {
   children: ReactNode;
   className?: string;
   external?: boolean;
+  onClick?: () => void;
 }
 
 /** Underline-wipe link: a bottom border scales in from the left on hover, no layout shift. */
-export function HoverLink({ href, children, className = "", external = false }: HoverLinkProps) {
+export function HoverLink({ href, children, className = "", external = false, onClick }: HoverLinkProps) {
   const classes = `group relative inline-block w-fit cursor-pointer ${className}`;
   const content = (
     <>
@@ -20,14 +21,14 @@ export function HoverLink({ href, children, className = "", external = false }: 
 
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes} onClick={onClick}>
         {content}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={classes}>
+    <Link href={href} className={classes} onClick={onClick}>
       {content}
     </Link>
   );

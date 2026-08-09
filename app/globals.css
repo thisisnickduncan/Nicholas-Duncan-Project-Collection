@@ -55,6 +55,13 @@
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
   }
+
+  /* Lenis focuses the scroll container (html/body) for keyboard scroll support;
+     that isn't a real navigation focus and shouldn't draw a ring around the page. */
+  html:focus-visible,
+  body:focus-visible {
+    outline: none;
+  }
 }
 
 .grain-overlay {

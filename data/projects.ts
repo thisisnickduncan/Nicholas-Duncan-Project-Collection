@@ -30,6 +30,30 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "telegram-news-collector",
+    title: "Telegram News Collector",
+    oneLiner: "A self-hosted news pipeline that clusters wire copy into real events, refuses to report anything only one newsroom covered, and delivers a bias-spread digest to Telegram on the hour.",
+    category: "Data",
+    role: "Sole developer — design, build, and deployment",
+    tools: ["Python", "SQLite", "Anthropic API (Claude)", "Telegram Bot API", "APScheduler", "rapidfuzz", "systemd / Linux"],
+    problem:
+      "A news digest is only worth reading if it tells you what actually happened and who agrees on it. The obvious build — fetch articles, summarize them, require two sources — quietly fails on real data: the single most 'corroborated' story in the database had nine distinct domains and exactly one distinct headline, because Hearst, Reach plc, and the Fox O&O group all run the same wire copy under different mastheads. Counting domains measures syndication, not agreement.",
+    approach:
+      "Built a nine-stage pipeline where each stage exists because the intuitive version was measurably wrong. Syndicated copies are collapsed by headline similarity so a publisher chain votes once — after stripping the trailing masthead, which was dragging five identical reprints below the collapse threshold. Headlines are grouped into real-world events by a Claude Haiku pass before the fuzzy matcher, since two newsrooms covering one story often share no words. GDELT's constant HTTP 429s are answered with many short retries instead of exponential backoff, after measuring that a first request following minutes of silence still fails — the API is saturated, not rate-limiting the caller. Topicality is used to rank, never to filter, because a headline gate would have dropped 11 of 16 delivered stories. Outlets are tagged from AllSides and an MBFC-derived dataset, and any outlet in neither is excluded from the math rather than guessed at.",
+    outcome: [
+      "Running in production as a systemd service on an always-on VM, delivering a digest every four hours where each story carries a cross-source summary, its source list, and the Left/Center/Right spread of the outlets that ran it.",
+      "Semantic event clustering raised the share of stories reaching two independent sources from 1.2% to 14.1% on identical input, and syndication collapse reduced one run's 21 domains to 7 genuine voices.",
+      "The scheduler starts fifteen minutes early and holds the finished digest for the target instant, so a fetch that varies from one to thirteen minutes still lands at 11:00:00, 15:00:00, and 19:00:00 exactly.",
+      "Stories that arrive with a single source are held rather than dropped, and graduate into a later digest labelled 'Now corroborated' if another newsroom picks them up.",
+    ],
+    outcomeMetrics: [
+      { label: "Corroboration rate", value: "1.2% → 14.1%" },
+      { label: "Outlets bias-rated", value: "8,774" },
+      { label: "Delivery accuracy", value: "On the hour, to the second" },
+    ],
+    githubUrl: "https://github.com/thisisnickduncan/telegram-news-collector",
+  },
+  {
     slug: "swingscore-political-analytics",
     title: "SwingScore Political Analytics Platform",
     oneLiner: "A county-level election analytics tool that scores and ranks swing-state volatility from 6M+ rows of public data.",

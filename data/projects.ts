@@ -43,7 +43,7 @@ export const projects: Project[] = [
     outcome: [
       "Running in production as a systemd service on an always-on VM, delivering a digest every four hours where each story carries a cross-source summary, its source list, and the Left/Center/Right spread of the outlets that ran it.",
       "Semantic event clustering raised the share of stories reaching two independent sources from 1.2% to 14.1% on identical input, and syndication collapse reduced one run's 21 domains to 7 genuine voices.",
-      "The scheduler starts fifteen minutes early and holds the finished digest for the target instant, so a fetch that varies from one to thirteen minutes still lands at 11:00:00, 15:00:00, and 19:00:00 exactly.",
+      "Digests arrive every four hours on the hour — 12am, 4am, 8am, and so on. The scheduler starts fifteen minutes early and holds the finished digest for the target instant, so a fetch that varies from one to thirteen minutes still lands exactly on the slot rather than whenever it happens to finish.",
       "Stories that arrive with a single source are held rather than dropped, and graduate into a later digest labelled 'Now corroborated' if another newsroom picks them up.",
     ],
     outcomeMetrics: [

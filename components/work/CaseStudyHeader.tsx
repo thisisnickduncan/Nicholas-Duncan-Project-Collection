@@ -2,6 +2,7 @@ import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { HoverLink } from "@/components/ui/HoverLink";
 import { ProjectVisual } from "@/components/ui/ProjectVisual";
 import { IframeEmbed } from "@/components/work/IframeEmbed";
+import { ScreenshotPanel } from "@/components/work/ScreenshotPanel";
 import { categoryLabel, type Project } from "@/data/projects";
 
 export function CaseStudyHeader({ project }: { project: Project }) {
@@ -59,9 +60,19 @@ export function CaseStudyHeader({ project }: { project: Project }) {
         <RevealOnScroll delay={0.25} className="mt-12 w-full">
           <IframeEmbed src={project.demoUrl} title={`${project.title} — live demo`} linkLabel="Open live demo" />
         </RevealOnScroll>
+      ) : project.screenshot ? (
+        <RevealOnScroll delay={0.25} className="mt-12 w-full">
+          <ScreenshotPanel
+            src={project.screenshot.src}
+            alt={`${project.title} — screenshot`}
+            width={project.screenshot.width}
+            height={project.screenshot.height}
+            caption={project.screenshot.caption}
+          />
+        </RevealOnScroll>
       ) : (
         <RevealOnScroll delay={0.25} className="mt-12 aspect-[16/9] w-full">
-          <ProjectVisual slug={project.slug} alt={project.title} image={project.image} className="h-full w-full" />
+          <ProjectVisual slug={project.slug} alt={project.title} className="h-full w-full" />
         </RevealOnScroll>
       )}
     </header>

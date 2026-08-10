@@ -9,6 +9,15 @@ export interface OutcomeMetric {
   value: string;
 }
 
+export interface Screenshot {
+  /** Path under /public/projects/[slug]/. */
+  src: string;
+  /** Natural pixel dimensions, so the image reserves its space before loading. */
+  width: number;
+  height: number;
+  caption?: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -22,8 +31,8 @@ export interface Project {
   outcomeMetrics?: OutcomeMetric[];
   githubUrl?: string;
   demoUrl?: string;
-  /** Absent -> ProjectVisual renders a generated placeholder. Set once a real screenshot exists in /public/projects/[slug]/. */
-  image?: string;
+  /** Absent -> ProjectVisual renders a generated placeholder. Rendered uncropped at its own aspect ratio, so phone captures survive. */
+  screenshot?: Screenshot;
   /** Full paper PDF in /public/papers/. When set, the case study renders an embedded scroll viewer + download link. */
   paperUrl?: string;
 }
@@ -52,6 +61,13 @@ export const projects: Project[] = [
       { label: "Delivery accuracy", value: "On the hour, to the second" },
     ],
     githubUrl: "https://github.com/thisisnickduncan/telegram-news-collector",
+    screenshot: {
+      src: "/projects/telegram-news-collector/digest.png",
+      width: 323,
+      height: 734,
+      caption:
+        "A delivered digest: each story carries its source list, the Left/Center/Right coverage spread, and Follow / Ask / Ignore controls.",
+    },
   },
   {
     slug: "swingscore-political-analytics",

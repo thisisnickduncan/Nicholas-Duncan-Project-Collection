@@ -100,6 +100,7 @@ export function CaseStudyHeader({ project }: { project: Project }) {
             width={project.screenshot.width}
             height={project.screenshot.height}
             caption={project.screenshot.caption}
+            priority
           />
         </RevealOnScroll>
       ) : null}

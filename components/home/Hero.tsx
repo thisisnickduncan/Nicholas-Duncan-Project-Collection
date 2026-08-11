@@ -1,30 +1,13 @@
 import Image from "next/image";
 import { HoverLink } from "@/components/ui/HoverLink";
-import { MetricValue } from "@/components/ui/MetricValue";
 import { Parallax } from "@/components/ui/Parallax";
 import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
-
-/**
- * Three real measurements, pulled from the case studies rather than restated, so
- * the hero can never drift out of sync with the work it is summarising.
- */
-const HIGHLIGHTS: { slug: string; label: string }[] = [
-  { slug: "swingscore-political-analytics", label: "Rows of data processed" },
-  { slug: "telegram-news-collector", label: "Corroboration rate" },
-  { slug: "telegram-news-collector", label: "Outlets bias-rated" },
-];
-
-function getHighlights() {
-  return HIGHLIGHTS.map(({ slug, label }) => {
-    const project = projects.find((p) => p.slug === slug);
-    const metric = project?.outcomeMetrics?.find((m) => m.label === label);
-    return metric && project ? { ...metric, slug: project.slug } : null;
-  }).filter((m): m is { label: string; value: string; slug: string } => m !== null);
-}
 
 export function Hero() {
-  const highlights = getHighlights();
+  /* A non-breaking hyphen for display only: the compound in the tagline is one
+     word typographically, and letting it split across two lines would read as a
+     mistake. The stored string keeps a plain hyphen for titles and share cards. */
+  const tagline = profile.tagline.replace(/-/g, "‑");
 
   return (
     <section className="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-4 pb-14 pt-32 sm:px-6 sm:pt-36 lg:pb-16">
@@ -34,8 +17,10 @@ export function Hero() {
               in CSS: this is the largest paint on the page, so it must never wait
               for JavaScript to become readable — and must never be hidden again
               after it has already been read. */}
-          <h1 className="rise-into-place max-w-[12ch] text-[clamp(3rem,8.2vw,7.5rem)] font-semibold leading-[0.92] tracking-[-0.045em]">
-            {profile.tagline}
+          {/* Sized so the longest unbreakable token — the hyphenated compound —
+              still clears the portrait's column at every width. */}
+          <h1 className="rise-into-place max-w-[16ch] text-[clamp(2.75rem,6.6vw,6.25rem)] font-semibold leading-[0.92] tracking-[-0.045em]">
+            {tagline}
           </h1>
 
           {/* Byline under the headline, the way an editorial page attributes a piece. */}
@@ -45,7 +30,6 @@ export function Hero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-medium">
             <HoverLink href="/work">View selected work &rarr;</HoverLink>
-            <HoverLink href={`mailto:${profile.email}`}>Get in touch &rarr;</HoverLink>
             <span className="measure text-xs uppercase tracking-widest text-ink-muted">
               {profile.location}
             </span>
@@ -56,10 +40,15 @@ export function Hero() {
             separates the two into layers and makes leaving the hero feel like one
             continuous movement rather than a cut to the next section. */}
         <Parallax className="lg:col-span-4" lag={0.1} range={["start start", "end start"]}>
-          {/* The portrait sits on a surface rather than floating: it reads as a
-              document photograph, and the panel gives the cutout a ground. */}
-          <div className="relative ml-auto w-44 border border-rule bg-surface sm:w-52 lg:w-full">
-            <div className="relative aspect-[1171/1168] w-full">
+          {/* The cutout stands directly on the page in both themes — no panel, no
+              frame — so the only background behind it is the paper itself. The
+              photograph ends mid-chest at the edge of the file. Fading that last
+              band out was worse than the crop it hid: on light paper a navy
+              jacket dissolving into greige reads as a broken image, not a
+              decision. The figure is solid, and the crop is stated — it stands
+              on a hairline, the same rule every other section is built from. */}
+          <div className="relative ml-auto w-44 sm:w-52 lg:w-full">
+            <div className="relative aspect-[1171/1168] w-full border-b border-rule-strong">
               <Image
                 src={profile.photo}
                 alt={`${profile.name}, portrait`}
@@ -72,26 +61,6 @@ export function Hero() {
           </div>
         </Parallax>
       </div>
-
-      {/* The signature: his own corrections, read off the instrument. Every value
-          here is a real measurement from a real case study. */}
-      {highlights.length > 0 && (
-        <dl className="mt-14 grid grid-cols-1 border-t border-rule-strong sm:grid-cols-3">
-          {highlights.map((metric) => (
-            <div
-              key={`${metric.slug}-${metric.label}`}
-              className="flex h-full flex-col justify-between gap-3 border-b border-rule py-5 sm:border-b-0 sm:border-r sm:px-6 sm:py-6 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
-            >
-              <dt className="measure order-last text-xs uppercase tracking-[0.14em] text-ink-muted">
-                {metric.label}
-              </dt>
-              <dd className="measure text-[clamp(1.5rem,2.4vw,2rem)] font-medium leading-tight tracking-tight text-measure">
-                <MetricValue value={metric.value} />
-              </dd>
-            </div>
-          ))}
-        </dl>
-      )}
     </section>
   );
 }

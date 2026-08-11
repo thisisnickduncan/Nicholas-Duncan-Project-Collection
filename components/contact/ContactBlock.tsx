@@ -54,6 +54,9 @@ export function ContactBlock() {
                 <HoverLink href={profile.githubUrl} external className="text-ink">
                   GitHub
                 </HoverLink>
+                <HoverLink href={profile.instagramUrl} external className="text-ink">
+                  Instagram
+                </HoverLink>
               </dd>
             </div>
           </dl>

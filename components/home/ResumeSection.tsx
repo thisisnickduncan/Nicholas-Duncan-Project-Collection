@@ -9,18 +9,13 @@ export function ResumeSection() {
         <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-semibold tracking-[-0.03em]">
           Resume
         </h2>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <HoverLink
-            href={profile.resumeUrl}
-            external
-            className="measure text-xs uppercase tracking-[0.14em] text-ink"
-          >
-            Download PDF &rarr;
-          </HoverLink>
-          <span className="measure text-xs uppercase tracking-[0.14em] text-ink-muted">
-            {profile.certifications.join(" · ")}
-          </span>
-        </div>
+        <HoverLink
+          href={profile.resumeUrl}
+          external
+          className="measure text-xs uppercase tracking-[0.14em] text-ink"
+        >
+          Download PDF &rarr;
+        </HoverLink>
       </div>
 
       {/* The document sits on the raised surface, framed and given breathing room,

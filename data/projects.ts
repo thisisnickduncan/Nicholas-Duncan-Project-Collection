@@ -35,7 +35,13 @@ export interface Project {
   screenshot?: Screenshot;
   /** Full paper PDF in /public/papers/. When set, the case study renders an embedded scroll viewer + download link. */
   paperUrl?: string;
+  /** Overrides the band's call to action. Defaults to "Read the case study", which
+   *  only tells the truth for the written work — a shipped program is something you
+   *  go and look at, and a design document is a proposal. */
+  ctaLabel?: string;
 }
+
+export const DEFAULT_CTA_LABEL = "Read the case study";
 
 export const projects: Project[] = [
   {
@@ -61,6 +67,7 @@ export const projects: Project[] = [
       { label: "Delivery accuracy", value: "On the hour, to the second" },
     ],
     githubUrl: "https://github.com/thisisnickduncan/telegram-news-collector",
+    ctaLabel: "Take a look at the program",
     screenshot: {
       src: "/projects/telegram-news-collector/digest.png",
       width: 323,
@@ -84,9 +91,14 @@ export const projects: Project[] = [
       "Shipped a live analytics platform where any county in a swing state can be looked up, ranked, and compared by swing score and turnout volatility.",
       "The visualizations and ranking logic are built to support data-driven outreach decisions, not just descriptive charts.",
     ],
-    outcomeMetrics: [{ label: "Rows of data processed", value: "6M+" }],
+    outcomeMetrics: [
+      { label: "Rows of data processed", value: "6M+" },
+      { label: "Ranked unit", value: "Counties in swing states" },
+      { label: "Status", value: "Live, public demo" },
+    ],
     githubUrl: "https://github.com/thisisnickduncan/Political-Swing-Score-Calculator",
     demoUrl: "https://itm352-swingscore.onrender.com/",
+    ctaLabel: "Take a look at the program",
   },
   {
     slug: "challenger-failed-project-analysis",
@@ -109,7 +121,11 @@ export const projects: Project[] = [
       "Concluded that the core failure was treating launch as a calendar milestone instead of a value decision, and that authority was allowed to override unresolved technical dissent.",
       "Proposed concrete corrective lessons: binding no-go criteria for unproven conditions, safety authority structurally separated from schedule authority, leading-indicator dashboards for risk signals, and redefining project success as safe mission completion rather than on-time launch.",
     ],
-    outcomeMetrics: [{ label: "PMBOK domains mapped", value: "18" }],
+    outcomeMetrics: [
+      { label: "PMBOK domains mapped", value: "18" },
+      { label: "Corrective lessons proposed", value: "4" },
+      { label: "Root cause named", value: "Governance, not the O-ring" },
+    ],
     paperUrl: "/papers/challenger-failed-project-analysis.pdf",
   },
   {
@@ -127,8 +143,13 @@ export const projects: Project[] = [
       "Produced a design where relevant internship matches surface automatically instead of relying on someone to manually connect a student to a listing.",
       "The same schema supports advisors pulling live status across their full caseload — applied, interviewing, or offer — replacing one-on-one status check-ins.",
     ],
-    outcomeMetrics: [{ label: "Core tables designed", value: "10" }],
+    outcomeMetrics: [
+      { label: "Tables in schema", value: "10" },
+      { label: "Matched on", value: "Major + skills" },
+      { label: "Advisor view", value: "Full caseload status" },
+    ],
     paperUrl: "/papers/internship-matching-database.pdf",
+    ctaLabel: "Read the proposal",
   },
   {
     slug: "kai-motion",
@@ -143,9 +164,9 @@ export const projects: Project[] = [
       "Operations & Systems Design",
     ],
     problem:
-      "Hawaiʻi's ocean-recreation industry is built around volume tourism — fast, transactional surf lessons — leaving a gap for visitors who want a safe, culturally grounded, and environmentally responsible ocean experience, while beach pollution and cultural commercialization keep increasing with tourism volume.",
+      "Hawai‘i's ocean-recreation industry is built around volume tourism — fast, transactional surf lessons — leaving a gap for visitors who want a safe, culturally grounded, and environmentally responsible ocean experience, while beach pollution and cultural commercialization keep increasing with tourism volume.",
     approach:
-      "As COO, I lead operations, systems, delivery, and technology for the venture, working alongside three co-founders. We selected culturally curious Oʻahu visitors as our beachhead market by scoring it against the six beachhead-market criteria, sized the opportunity using a conservative TAM model, and chose a disruption-based competitive strategy — over intellectual-property or value-chain alternatives — built around small-group lessons that combine surf instruction, ocean safety, Hawaiian culture, and stewardship.",
+      "As COO, I lead operations, systems, delivery, and technology for the venture, working alongside three co-founders. We selected culturally curious O‘ahu visitors as our beachhead market by scoring it against the six beachhead-market criteria, sized the opportunity using a conservative TAM model, and chose a disruption-based competitive strategy — over intellectual-property or value-chain alternatives — built around small-group lessons that combine surf instruction, ocean safety, Hawaiian culture, and stewardship.",
     outcome: [
       "Completed startup setup (registration, insurance, permits, funding via founder capital and the UH Kalo Grant) and moved into early paid bookings and service validation.",
       "Modeled a lean, service-based financial structure with a clear path to profitability, and built out the operating systems, launch phases, and partnership roadmap the business is now executing against.",
@@ -153,6 +174,7 @@ export const projects: Project[] = [
     outcomeMetrics: [
       { label: "Beachhead TAM", value: "$12.49M/yr" },
       { label: "Year 1 net profit (projected)", value: "$13,740" },
+      { label: "Stage", value: "Operating, paid bookings" },
     ],
     paperUrl: "/papers/kai-motion.pdf",
   },
@@ -181,6 +203,7 @@ export const projects: Project[] = [
     outcomeMetrics: [
       { label: "Net capacity gain", value: "~70-100 → 320 spaces" },
       { label: "Estimated project cost", value: "$13M–$18M" },
+      { label: "Delivery timeline", value: "30 months, six phases" },
     ],
     paperUrl: "/papers/central-campus-parking-redevelopment.pdf",
   },

@@ -6,11 +6,50 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { PageTransition } from "@/components/providers/PageTransition";
 import { profile } from "@/data/profile";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.tagline}`,
+/** Structured data so a search result can name the person, the role, and the
+ *  credential rather than guessing from the page text. Every field is sourced
+ *  from data/profile.ts — nothing here is asserted twice. */
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
   description: profile.oneLineBio,
+  url: siteUrl,
+  image: `${siteUrl}${profile.photo}`,
+  email: `mailto:${profile.email}`,
+  telephone: profile.phone,
+  address: { "@type": "PostalAddress", addressLocality: "Laguna Niguel", addressRegion: "CA" },
+  sameAs: [profile.linkedinUrl, profile.githubUrl],
+  alumniOf: profile.education.map((edu) => ({
+    "@type": "CollegeOrUniversity",
+    name: edu.school,
+  })),
+  knowsAbout: profile.skillCategories.flatMap((group) => group.items),
+};
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${profile.name} — ${profile.tagline}`,
+    template: `%s`,
+  },
+  description: profile.oneLineBio,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "profile",
+    siteName: profile.name,
+    title: `${profile.name} — ${profile.tagline}`,
+    description: profile.oneLineBio,
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} — ${profile.tagline}`,
+    description: profile.oneLineBio,
+  },
 };
 
 /* Matches --color-paper in each theme, so the browser chrome above the page
@@ -31,6 +70,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: noFlashThemeScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </head>
       <body>
         <div className="grain-overlay" aria-hidden="true" />

@@ -19,14 +19,16 @@ export function PageTransition({ children }: { children: ReactNode }) {
 
   if (reduced) return <>{children}</>;
 
+  /* Exit only. The outgoing page dissolves; the incoming one is simply there.
+     There is deliberately no `initial` here and none on AnimatePresence: an
+     entrance animation would hide the new page for its own duration, and
+     `initial={false}` — the obvious way to skip that on first load — suppresses
+     the initial animation of every motion component in the subtree, so nothing
+     anywhere on the site could animate on mount. Omitting both leaves each page
+     free to introduce itself, and costs nothing at first paint. */
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: 0.18, ease: easeOut } }}
-        exit={{ opacity: 0, transition: { duration: 0.1, ease: easeOut } }}
-      >
+    <AnimatePresence mode="wait">
+      <motion.div key={pathname} exit={{ opacity: 0, transition: { duration: 0.12, ease: easeOut } }}>
         {children}
       </motion.div>
     </AnimatePresence>

@@ -29,5 +29,9 @@ next-env.d.ts
 # logs
 npm-debug.log*
 
+# design-review screenshots taken at the repo root while iterating
+/.playwright-mcp/
+/*.png
+
 .vercel
 .env*

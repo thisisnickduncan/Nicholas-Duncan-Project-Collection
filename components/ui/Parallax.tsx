@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 interface ParallaxProps {
   children: ReactNode;
@@ -29,6 +31,11 @@ interface ParallaxProps {
 export function Parallax({ children, className = "", lag = 0.06, range }: ParallaxProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+
+  useIsomorphicLayoutEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -37,13 +44,12 @@ export function Parallax({ children, className = "", lag = 0.06, range }: Parall
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", `${lag * 100}%`]);
 
-  if (reduced) {
-    return <div className={className}>{children}</div>;
-  }
-
+  /* The element tree is identical in every case; only the style differs. Swapping
+     in a plain div for reduced motion would change the markup the client renders
+     against what the server sent, and fail hydration. */
   return (
     <div ref={ref} className={className}>
-      <motion.div style={{ y }}>{children}</motion.div>
+      <motion.div style={mounted && !reduced ? { y } : undefined}>{children}</motion.div>
     </div>
   );
 }

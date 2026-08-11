@@ -24,6 +24,11 @@
   --color-measure: #0e5a5a;
   --color-on-signal: #fbf9f5;
 
+  /* The two washes that light the ground. Weak on purpose: they should never be
+     legible as shapes, only as the paper having a direction. */
+  --wash-warm: rgb(196 154 66 / 0.14);
+  --wash-cool: rgb(14 90 90 / 0.07);
+
   /* Legacy aliases. The components still speak the old vocabulary; these carry
      them onto the new palette so the swap lands in one step, and they retire as
      each component is rewritten. */
@@ -56,6 +61,11 @@
   --color-signal-hover: #efbb49;
   --color-measure: #4fa8a8;
   --color-on-signal: #17150f;
+
+  /* On the dark ground the same washes read as a light source rather than a
+     tint, so they carry more weight without becoming visible as shapes. */
+  --wash-warm: rgb(217 164 49 / 0.1);
+  --wash-cool: rgb(79 168 168 / 0.07);
 
   --color-background: var(--color-paper);
   --color-foreground: var(--color-ink);
@@ -102,6 +112,22 @@
     font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "kern", "liga";
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* The ground is lit rather than flat. Two very wide, very weak washes — warm
+     from the top left, cool from the lower right — give the paper somewhere to
+     fall away to, so large areas of empty stock read as air instead of as a
+     surface nobody finished. Fixed, so it behaves like light in the room the
+     page is scrolling through rather than a pattern printed on the page. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(70rem 50rem at 8% -10%, var(--wash-warm), transparent 70%),
+      radial-gradient(60rem 45rem at 100% 108%, var(--wash-cool), transparent 72%);
   }
 
   h1, h2, h3, h4 {

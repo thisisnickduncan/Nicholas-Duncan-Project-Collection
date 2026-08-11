@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { ProjectRow } from "@/components/work/ProjectRow";
+import { ProjectBand } from "@/components/work/ProjectBand";
+import { IndexRail } from "@/components/work/IndexRail";
 import { projects, categoryLabel, type ProjectCategory } from "@/data/projects";
 
 type Filter = ProjectCategory | "All";
@@ -44,11 +44,11 @@ export function ProjectIndex({ intro }: { intro: string }) {
         })}
       </div>
 
+      <IndexRail labels={filtered.map((project) => project.title)} />
+
       <div className="mt-12">
         {filtered.map((project) => (
-          <RevealOnScroll key={project.slug}>
-            <ProjectRow project={project} />
-          </RevealOnScroll>
+          <ProjectBand key={project.slug} project={project} />
         ))}
       </div>
     </section>

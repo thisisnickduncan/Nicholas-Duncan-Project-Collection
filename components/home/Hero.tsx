@@ -27,15 +27,14 @@ export function Hero() {
   const highlights = getHighlights();
 
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-14 pt-32 sm:px-6 sm:pt-40 lg:pb-20">
+    <section className="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-4 pb-14 pt-32 sm:px-6 sm:pt-36 lg:pb-16">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-8">
-          {/* The thesis, not the name. Rendered plainly on the server: this is the
-              largest paint on the page and must never wait for JavaScript. */}
-          {/* Rendered plainly on the server and animated in CSS. This is the largest
-              paint on the page, so it must never wait for JavaScript to become
-              readable — and must never be hidden after it has already been read. */}
-          <h1 className="rise-into-place max-w-[13ch] text-[clamp(2.75rem,7vw,6rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
+          {/* The claim, not the name. Rendered plainly on the server and animated
+              in CSS: this is the largest paint on the page, so it must never wait
+              for JavaScript to become readable — and must never be hidden again
+              after it has already been read. */}
+          <h1 className="rise-into-place max-w-[12ch] text-[clamp(3rem,8.2vw,7.5rem)] font-semibold leading-[0.92] tracking-[-0.045em]">
             {profile.tagline}
           </h1>
 

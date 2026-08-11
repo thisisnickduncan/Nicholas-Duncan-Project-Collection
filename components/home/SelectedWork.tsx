@@ -1,6 +1,5 @@
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { HoverLink } from "@/components/ui/HoverLink";
-import { ProjectRow } from "@/components/work/ProjectRow";
+import { ProjectBand } from "@/components/work/ProjectBand";
 import { projects } from "@/data/projects";
 
 export function SelectedWork() {
@@ -19,9 +18,7 @@ export function SelectedWork() {
 
       <div className="mt-10">
         {featured.map((project) => (
-          <RevealOnScroll key={project.slug}>
-            <ProjectRow project={project} />
-          </RevealOnScroll>
+          <ProjectBand key={project.slug} project={project} />
         ))}
       </div>
     </section>

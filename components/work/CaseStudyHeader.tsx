@@ -1,67 +1,99 @@
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+﻿import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { HoverLink } from "@/components/ui/HoverLink";
-import { ProjectVisual } from "@/components/ui/ProjectVisual";
 import { IframeEmbed } from "@/components/work/IframeEmbed";
 import { ScreenshotPanel } from "@/components/work/ScreenshotPanel";
 import { categoryLabel, type Project } from "@/data/projects";
 
+function Fact({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <dt className="measure text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
+        {label}
+      </dt>
+      <dd className="mt-2 text-sm leading-relaxed text-ink">{value}</dd>
+    </div>
+  );
+}
+
 export function CaseStudyHeader({ project }: { project: Project }) {
   return (
-    <header className="mx-auto max-w-6xl px-4 pb-12 pt-36 sm:px-6 sm:pt-44">
-      <RevealOnScroll>
-        <HoverLink href="/work" className="text-sm text-muted">
-          &larr; Back to work
-        </HoverLink>
-      </RevealOnScroll>
+    <header className="mx-auto max-w-6xl px-4 pb-12 pt-32 sm:px-6 sm:pt-40">
+      <HoverLink href="/work" className="measure text-xs uppercase tracking-[0.14em] text-ink-muted">
+        &larr; All work
+      </HoverLink>
 
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12">
-        <RevealOnScroll delay={0.1} className="lg:col-span-8">
-          <h1 className="text-[clamp(2rem,5vw,4rem)] font-semibold leading-[1.05] tracking-tight">
+      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-8">
+          <h1 className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
             {project.title}
           </h1>
-          <p className="mt-4 max-w-xl text-lg text-muted">{project.oneLiner}</p>
+          <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-ink-muted">
+            {project.oneLiner}
+          </p>
+
           {(project.githubUrl || project.demoUrl) && (
-            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            <div className="mt-7 flex flex-wrap gap-x-7 gap-y-2">
               {project.githubUrl && (
-                <HoverLink href={project.githubUrl} external>
+                <HoverLink
+                  href={project.githubUrl}
+                  external
+                  className="measure text-xs uppercase tracking-[0.14em] text-ink"
+                >
                   View source &rarr;
                 </HoverLink>
               )}
               {project.demoUrl && (
-                <HoverLink href={project.demoUrl} external>
+                <HoverLink
+                  href={project.demoUrl}
+                  external
+                  className="measure text-xs uppercase tracking-[0.14em] text-ink"
+                >
                   Live demo &rarr;
                 </HoverLink>
               )}
             </div>
           )}
-        </RevealOnScroll>
+        </div>
 
-        <RevealOnScroll delay={0.2} className="grid grid-cols-2 gap-6 text-sm lg:col-span-4 lg:grid-cols-1">
-          <div>
-            <p className="text-muted">Role</p>
-            <p className="mt-1">{project.role}</p>
+        <dl className="grid grid-cols-2 gap-6 border-t border-rule pt-6 lg:col-span-4 lg:grid-cols-1 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+          <Fact label="Role" value={project.role} />
+          <Fact label="Category" value={categoryLabel(project.category)} />
+          <div className="col-span-2 lg:col-span-1">
+            <dt className="measure text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
+              Tools
+            </dt>
+            <dd className="mt-2 flex flex-wrap gap-x-2 gap-y-1.5">
+              {project.tools.map((tool) => (
+                <span
+                  key={tool}
+                  className="measure border border-rule px-2 py-1 text-[0.6875rem] text-ink-muted"
+                >
+                  {tool}
+                </span>
+              ))}
+            </dd>
           </div>
-          <div>
-            <p className="text-muted">Category</p>
-            <p className="mt-1">{categoryLabel(project.category)}</p>
-          </div>
-          <div>
-            <p className="text-muted">Tools</p>
-            <p className="mt-1">{project.tools.join(", ")}</p>
-          </div>
-        </RevealOnScroll>
+        </dl>
       </div>
 
       {project.paperUrl ? (
-        <RevealOnScroll delay={0.25} className="mt-12 w-full">
-          <IframeEmbed src={project.paperUrl} title={`${project.title} — full paper`} linkLabel="Download PDF" />
+        <RevealOnScroll className="mt-14 w-full">
+          <IframeEmbed
+            src={project.paperUrl}
+            title={`${project.title} — full paper`}
+            linkLabel="Download the paper (PDF)"
+          />
         </RevealOnScroll>
       ) : project.demoUrl ? (
-        <RevealOnScroll delay={0.25} className="mt-12 w-full">
-          <IframeEmbed src={project.demoUrl} title={`${project.title} — live demo`} linkLabel="Open live demo" />
+        <RevealOnScroll className="mt-14 w-full">
+          <IframeEmbed
+            src={project.demoUrl}
+            title={`${project.title} — live demo`}
+            linkLabel="Open the live demo"
+          />
         </RevealOnScroll>
       ) : project.screenshot ? (
-        <RevealOnScroll delay={0.25} className="mt-12 w-full">
+        <RevealOnScroll className="mt-14 w-full">
           <ScreenshotPanel
             src={project.screenshot.src}
             alt={`${project.title} — screenshot`}
@@ -70,11 +102,7 @@ export function CaseStudyHeader({ project }: { project: Project }) {
             caption={project.screenshot.caption}
           />
         </RevealOnScroll>
-      ) : (
-        <RevealOnScroll delay={0.25} className="mt-12 aspect-[16/9] w-full">
-          <ProjectVisual slug={project.slug} alt={project.title} className="h-full w-full" />
-        </RevealOnScroll>
-      )}
+      ) : null}
     </header>
   );
 }

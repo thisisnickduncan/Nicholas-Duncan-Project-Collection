@@ -33,24 +33,29 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     <>
       <ScrollProgressBar />
       <CaseStudyHeader project={project} />
-      <CaseStudySection index="01" label="Problem">
+      <CaseStudySection label="Problem">
         <p>{project.problem}</p>
       </CaseStudySection>
-      <CaseStudySection index="02" label="Approach">
+      <CaseStudySection label="Approach">
         <p>{project.approach}</p>
       </CaseStudySection>
-      <CaseStudySection index="03" label="Outcome">
-        <div className="space-y-4">
-          {project.outcome.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-        </div>
+      <CaseStudySection label="Outcome">
+        {project.outcome.map((paragraph, i) => (
+          <p key={i}>{paragraph}</p>
+        ))}
         {project.outcomeMetrics && (
-          <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3">
+          <dl className="mt-10 grid grid-cols-1 border-t border-rule-strong sm:grid-cols-3">
             {project.outcomeMetrics.map((metric) => (
-              <div key={metric.label}>
-                <dt className="text-sm text-muted">{metric.label}</dt>
-                <dd className="mt-1 text-2xl font-semibold tracking-tight text-accent">{metric.value}</dd>
+              <div
+                key={metric.label}
+                className="border-b border-rule py-5 sm:border-b-0 sm:border-r sm:px-5 sm:py-6 sm:first:pl-0 sm:last:border-r-0"
+              >
+                <dd className="measure text-2xl font-medium leading-none tracking-tight text-measure">
+                  {metric.value}
+                </dd>
+                <dt className="measure mt-3 text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
+                  {metric.label}
+                </dt>
               </div>
             ))}
           </dl>

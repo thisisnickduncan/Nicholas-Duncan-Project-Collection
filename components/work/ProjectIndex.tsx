@@ -1,40 +1,54 @@
 "use client";
 
 import { useState } from "react";
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
-import { ProjectRow } from "@/components/work/ProjectRow";
+import { ProjectBand } from "@/components/work/ProjectBand";
+import { IndexRail } from "@/components/work/IndexRail";
 import { projects, categoryLabel, type ProjectCategory } from "@/data/projects";
 
-const categories: ProjectCategory[] = ["IT", "PM", "Data", "Security"];
+type Filter = ProjectCategory | "All";
 
-export function ProjectIndex() {
-  const [active, setActive] = useState<ProjectCategory | "All">("All");
+/** Only offer a category that something is actually filed under, so the filter bar
+ *  can never lead to an empty page. */
+const populated = new Set<ProjectCategory>(projects.map((p) => p.category));
+const filters: Filter[] = ["All", ...(["IT", "PM", "Data", "Security"] as ProjectCategory[]).filter((c) => populated.has(c))];
+
+export function ProjectIndex({ intro }: { intro: string }) {
+  const [active, setActive] = useState<Filter>("All");
   const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-24 pt-36 sm:px-6 sm:pt-44">
-      <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold tracking-tight">Selected Work</h1>
+    <section className="mx-auto max-w-6xl px-4 pb-24 pt-32 sm:px-6 sm:pt-40">
+      <h1 className="font-display text-[clamp(2.25rem,5.5vw,4rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
+        Selected work
+      </h1>
+      <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">{intro}</p>
 
-      <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-        {(["All", ...categories] as const).map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            onClick={() => setActive(cat)}
-            className={`cursor-pointer border-b pb-1 transition-colors duration-200 ${
-              active === cat ? "border-accent text-accent" : "border-transparent text-muted hover:text-foreground"
-            }`}
-          >
-            {cat === "All" ? cat : categoryLabel(cat)}
-          </button>
-        ))}
+      <div className="mt-10 flex flex-wrap gap-x-2 gap-y-2" role="group" aria-label="Filter projects by category">
+        {filters.map((filter) => {
+          const isActive = active === filter;
+          return (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => setActive(filter)}
+              aria-pressed={isActive}
+              className={`measure cursor-pointer border px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.14em] transition-[background-color,border-color,color,transform] duration-[var(--duration-fast)] ease-[var(--ease-out)] active:scale-[0.98] ${
+                isActive
+                  ? "border-ink bg-ink text-paper"
+                  : "border-rule text-ink-muted hover:border-rule-strong hover:text-ink"
+              }`}
+            >
+              {filter === "All" ? `All ${projects.length}` : categoryLabel(filter)}
+            </button>
+          );
+        })}
       </div>
 
-      <div className="mt-8">
-        {filtered.map((project, i) => (
-          <RevealOnScroll key={project.slug} delay={Math.min(i * 0.05, 0.3)}>
-            <ProjectRow project={project} index={i} />
-          </RevealOnScroll>
+      <IndexRail labels={filtered.map((project) => project.title)} />
+
+      <div className="mt-12">
+        {filtered.map((project) => (
+          <ProjectBand key={project.slug} project={project} />
         ))}
       </div>
     </section>

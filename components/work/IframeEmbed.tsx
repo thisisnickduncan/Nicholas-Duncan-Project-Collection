@@ -13,11 +13,13 @@ export function IframeEmbed({
 }) {
   return (
     <div className={className}>
-      <div className="h-[75vh] w-full overflow-hidden border border-border bg-foreground/5">
-        <iframe src={src} title={title} className="h-full w-full" />
+      <div className="border border-rule bg-surface p-3 sm:p-5">
+        <div className="h-[clamp(26rem,68vh,52rem)] w-full overflow-hidden border border-rule bg-paper">
+          <iframe src={src} title={title} loading="lazy" className="h-full w-full" />
+        </div>
       </div>
-      <div className="mt-3 text-sm">
-        <HoverLink href={src} external>
+      <div className="mt-4">
+        <HoverLink href={src} external className="measure text-xs uppercase tracking-[0.14em] text-ink">
           {linkLabel} &rarr;
         </HoverLink>
       </div>

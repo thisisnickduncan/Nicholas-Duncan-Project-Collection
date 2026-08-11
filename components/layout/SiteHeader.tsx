@@ -1,16 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useLenis } from "lenis/react";
 import { HoverLink } from "@/components/ui/HoverLink";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { profile } from "@/data/profile";
 
 /** Scroll position below which the header always stays visible, even mid scroll-down. */
 const REVEAL_THRESHOLD = 80;
 
+export const NAV_LINKS = [
+  { href: "/work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/#contact", label: "Contact" },
+];
+
 export function SiteHeader() {
   const [visible, setVisible] = useState(true);
+  const pathname = usePathname();
 
   useLenis((lenis) => {
     if (lenis.scroll < REVEAL_THRESHOLD || !lenis.isScrolling || lenis.direction === -1) {
@@ -22,21 +32,41 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed inset-x-4 top-4 z-50 transition-transform duration-300 ease-out sm:inset-x-6 sm:top-6 ${
-        visible ? "translate-y-0" : "-translate-y-[150%]"
+      className={`fixed inset-x-0 top-0 z-50 border-b border-rule bg-paper/85 backdrop-blur-md transition-transform duration-[var(--duration-slow)] ease-[var(--ease-out)] ${
+        visible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between border border-border bg-background/80 px-4 py-3 backdrop-blur-md sm:px-6">
-        <HoverLink href="/" className="text-sm font-semibold tracking-tight">
-          Home
-        </HoverLink>
-        <nav className="hidden items-center gap-6 text-sm sm:flex">
-          <HoverLink href="/work">Work</HoverLink>
-          <HoverLink href="/#contact">Contact</HoverLink>
-          <HoverLink href="/about">About</HoverLink>
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+        <Link
+          href="/"
+          aria-current={pathname === "/" ? "page" : undefined}
+          className="font-display text-base font-semibold tracking-[-0.02em] text-ink"
+        >
+          {profile.name}
+        </Link>
+
+        <nav aria-label="Main" className="hidden items-center gap-7 sm:flex">
+          {NAV_LINKS.map((link) => {
+            const current = link.href.startsWith("/#")
+              ? false
+              : pathname === link.href || pathname.startsWith(`${link.href}/`);
+            return (
+              <HoverLink
+                key={link.href}
+                href={link.href}
+                aria-current={current ? "page" : undefined}
+                className={`measure text-xs uppercase tracking-[0.14em] ${
+                  current ? "text-ink" : "text-ink-muted"
+                }`}
+              >
+                {link.label}
+              </HoverLink>
+            );
+          })}
           <ThemeToggle />
         </nav>
-        <div className="flex items-center gap-3 sm:hidden">
+
+        <div className="flex items-center gap-2 sm:hidden">
           <ThemeToggle />
           <MobileNav />
         </div>

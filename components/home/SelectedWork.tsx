@@ -1,29 +1,24 @@
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 import { HoverLink } from "@/components/ui/HoverLink";
-import { ProjectRow } from "@/components/work/ProjectRow";
+import { ProjectBand } from "@/components/work/ProjectBand";
 import { projects } from "@/data/projects";
 
 export function SelectedWork() {
   const featured = projects.slice(0, 4);
 
   return (
-    <section className="mx-auto max-w-6xl border-t border-border px-4 py-16 sm:px-6 sm:py-24">
-      <div className="flex items-end justify-between gap-4">
-        <RevealOnScroll as="div">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Selected Work</h2>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.1}>
-          <HoverLink href="/work" className="text-sm text-muted">
-            View all &rarr;
-          </HoverLink>
-        </RevealOnScroll>
+    <section className="mx-auto max-w-6xl border-t border-rule-strong px-4 py-20 sm:px-6 sm:py-28">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+        <h2 className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-semibold tracking-[-0.03em]">
+          Selected work
+        </h2>
+        <HoverLink href="/work" className="measure text-xs uppercase tracking-[0.14em] text-ink-muted">
+          All {projects.length} projects &rarr;
+        </HoverLink>
       </div>
 
-      <div className="mt-8">
-        {featured.map((project, i) => (
-          <RevealOnScroll key={project.slug} delay={i * 0.05}>
-            <ProjectRow project={project} index={i} />
-          </RevealOnScroll>
+      <div className="mt-10">
+        {featured.map((project) => (
+          <ProjectBand key={project.slug} project={project} />
         ))}
       </div>
     </section>

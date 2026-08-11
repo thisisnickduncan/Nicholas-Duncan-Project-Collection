@@ -22,6 +22,11 @@ export interface Profile {
   name: string;
   tagline: string;
   oneLineBio: string;
+  /** The home page's standing statement. Shorter and sharper than the About
+   *  page's account, and deliberately not the same text: the front page makes
+   *  the claim, the About page tells the story behind it. */
+  teaserParagraphs: string[];
+  /** The full account, /about only. */
   bioParagraphs: string[];
   photo: string;
   location: string;
@@ -29,6 +34,7 @@ export interface Profile {
   phone: string;
   linkedinUrl: string;
   githubUrl: string;
+  instagramUrl: string;
   resumeUrl: string;
   certifications: string[];
   skillCategories: SkillCategory[];
@@ -38,13 +44,18 @@ export interface Profile {
 
 export const profile: Profile = {
   name: "Nick Duncan",
-  tagline: "Business systems, translated into working software.",
+  tagline: "Business-Minded, Tech Solutions",
   oneLineBio:
-    "BBA graduate in Management Information Systems and Business Management, with experience across data analysis, business operations, finance, and client-facing work.",
+    "BBA graduate in Management Information Systems and Business Management, with experience across data management, IT project management (SDLC), networking, cybersecurity, data analysis, business operations, finance, and client-facing work.",
+  teaserParagraphs: [
+    "I build things to find out where the obvious approach breaks, then figure out what actually holds up. I'm a recent BBA graduate from the University of Hawai‘i at Mānoa (Management Information Systems and Business Management), with a background spanning database design, business systems, project management, and data analysis, along with networking and cybersecurity fundamentals and full-stack development.",
+    "Before tech, I spent years in the service industry, which taught me how to stay sharp under pressure, manage competing priorities, and deliver consistently to customers. Skills I believe carry directly into how I approach projects and lead work today.",
+  ],
   bioParagraphs: [
-    "I'm a Bachelor of Business Administration graduate in Management Information Systems and Business Management from the University of Hawaiʻi at Mānoa, with experience spanning data analysis, business operations, finance, hospitality, and customer service.",
-    "I build things to find out where the obvious approach breaks. SwingScore, a Python/Flask application, took 6 million rows of election data and turned them into county rankings a campaign could act on. My Telegram news collector runs in production on its own server, and most of its design came from measuring where the intuitive version was wrong — nine news domains reporting a story turned out to be one wire service under nine mastheads, so the code had to learn the difference before its two-source rule meant anything.",
-    "I'm skilled in problem-solving, systems analysis, technical documentation, and data-driven decision-making, and I'm looking for a full-time role in IT, project management, data/business analysis, or cybersecurity.",
+    "I'm drawn to the point where a system stops being simple. That's usually where the real problem is, and figuring it out is what got me into MIS in the first place. I hold a BBA in Management Information Systems and Business Management from the University of Hawai‘i at Mānoa, where I picked up database design, business systems development, project management, and data analysis, plus a working foundation in networking, cybersecurity, and full-stack development.",
+    "Before tech, I spent years behind the bar and on the floor in the service industry, learning how to stay composed when things get busy, juggle a dozen priorities at once, and still deliver for the person in front of me. That same instinct for staying calm and organized under pressure is what I bring to how I run projects and lead work today.",
+    "Hello my name is Nicholas Duncan, I grew up in Laguna Niguel, California, and outside of work you'll usually find me surfing, at the gym, hanging out with my dog, or messing with computers, whether that's building one from parts or writing code for whatever project I'm into that week.",
+    "My strengths come down to problem-solving, systems analysis, technical documentation, and making decisions backed by data instead of guesswork.",
   ],
   photo: "/images/nick-duncan-cutout.png",
   location: "Laguna Niguel, CA",
@@ -52,6 +63,7 @@ export const profile: Profile = {
   phone: "(949) 357-8629",
   linkedinUrl: "https://www.linkedin.com/in/nicholas-duncan-a8341a272",
   githubUrl: "https://github.com/thisisnickduncan",
+  instagramUrl: "https://www.instagram.com/nick_duncannn/?hl=en",
   resumeUrl: "/resume.pdf",
   certifications: ["Google AI Essentials", "Six Sigma White Belt"],
   skillCategories: [
@@ -129,7 +141,7 @@ export const profile: Profile = {
   ],
   education: [
     {
-      school: "University of Hawaiʻi at Mānoa",
+      school: "University of Hawai‘i at Mānoa",
       degree: "Bachelor of Business Administration (BBA)",
       focus: "Management Information Systems & Business Management",
       dates: "2021 – 2026",

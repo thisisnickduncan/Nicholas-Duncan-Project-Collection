@@ -4,6 +4,7 @@ import { CaseStudyHeader } from "@/components/work/CaseStudyHeader";
 import { CaseStudySection } from "@/components/work/CaseStudySection";
 import { CaseStudyNav } from "@/components/work/CaseStudyNav";
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
+import { MetricValue } from "@/components/ui/MetricValue";
 import { projects, getProjectBySlug } from "@/data/projects";
 
 export function generateStaticParams() {
@@ -33,28 +34,39 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     <>
       <ScrollProgressBar />
       <CaseStudyHeader project={project} />
-      <CaseStudySection index="01" label="Problem">
+      <CaseStudySection label="Problem">
         <p>{project.problem}</p>
       </CaseStudySection>
-      <CaseStudySection index="02" label="Approach">
+      <CaseStudySection label="Approach">
         <p>{project.approach}</p>
       </CaseStudySection>
-      <CaseStudySection index="03" label="Outcome">
-        <div className="space-y-4">
-          {project.outcome.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-        </div>
-        {project.outcomeMetrics && (
-          <dl className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3">
-            {project.outcomeMetrics.map((metric) => (
-              <div key={metric.label}>
-                <dt className="text-sm text-muted">{metric.label}</dt>
-                <dd className="mt-1 text-2xl font-semibold tracking-tight text-accent">{metric.value}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
+      <CaseStudySection
+        label="Outcome"
+        footer={
+          project.outcomeMetrics && (
+            <dl className="mt-12 grid grid-cols-1 border-t border-rule-strong sm:grid-cols-3">
+              {project.outcomeMetrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="flex h-full flex-col justify-between gap-3 border-b border-rule py-5 sm:border-b-0 sm:border-r sm:px-5 sm:py-6 sm:first:pl-0 sm:last:border-r-0"
+                >
+                  {/* Labels are pushed to the bottom of the stretched cell so a value
+                      that wraps cannot drop its label below its neighbours. */}
+                  <dt className="measure order-last text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
+                    {metric.label}
+                  </dt>
+                  <dd className="measure text-2xl font-medium leading-tight tracking-tight text-measure">
+                    <MetricValue value={metric.value} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+      >
+        {project.outcome.map((paragraph, i) => (
+          <p key={i}>{paragraph}</p>
+        ))}
       </CaseStudySection>
       <CaseStudyNav currentSlug={project.slug} />
     </>

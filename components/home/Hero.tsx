@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { HoverLink } from "@/components/ui/HoverLink";
+import { MetricValue } from "@/components/ui/MetricValue";
+import { Parallax } from "@/components/ui/Parallax";
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 
@@ -30,7 +32,10 @@ export function Hero() {
         <div className="lg:col-span-8">
           {/* The thesis, not the name. Rendered plainly on the server: this is the
               largest paint on the page and must never wait for JavaScript. */}
-          <h1 className="max-w-[13ch] text-[clamp(2.75rem,7vw,6rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
+          {/* Rendered plainly on the server and animated in CSS. This is the largest
+              paint on the page, so it must never wait for JavaScript to become
+              readable — and must never be hidden after it has already been read. */}
+          <h1 className="rise-into-place max-w-[13ch] text-[clamp(2.75rem,7vw,6rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
             {profile.tagline}
           </h1>
 
@@ -48,7 +53,10 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="lg:col-span-4">
+        {/* The portrait trails the headline as the first screen scrolls away, which
+            separates the two into layers and makes leaving the hero feel like one
+            continuous movement rather than a cut to the next section. */}
+        <Parallax className="lg:col-span-4" lag={0.1} range={["start start", "end start"]}>
           {/* The portrait sits on a surface rather than floating: it reads as a
               document photograph, and the panel gives the cutout a ground. */}
           <div className="relative ml-auto w-44 border border-rule bg-surface sm:w-52 lg:w-full">
@@ -63,7 +71,7 @@ export function Hero() {
               />
             </div>
           </div>
-        </div>
+        </Parallax>
       </div>
 
       {/* The signature: his own corrections, read off the instrument. Every value
@@ -79,7 +87,7 @@ export function Hero() {
                 {metric.label}
               </dt>
               <dd className="measure text-[clamp(1.5rem,2.4vw,2rem)] font-medium leading-tight tracking-tight text-measure">
-                {metric.value}
+                <MetricValue value={metric.value} />
               </dd>
             </div>
           ))}

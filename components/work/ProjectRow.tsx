@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MetricValue } from "@/components/ui/MetricValue";
+import { Parallax } from "@/components/ui/Parallax";
 import { categoryLabel, type Project } from "@/data/projects";
 
 /**
@@ -38,7 +40,7 @@ function RowVisual({ project }: { project: Project }) {
               {metric.label}
             </dt>
             <dd className="measure text-[clamp(1.375rem,2vw,1.75rem)] font-medium leading-tight tracking-tight text-measure">
-              {metric.value}
+              <MetricValue value={metric.value} />
             </dd>
           </div>
         ))}
@@ -81,9 +83,11 @@ export function ProjectRow({ project }: { project: Project }) {
         </span>
       </div>
 
-      <div className="lg:col-span-5">
+      {/* The evidence trails its own headline as the row crosses the screen, so the
+          list assembles under the scroll instead of arriving all at once. */}
+      <Parallax className="lg:col-span-5" lag={0.07}>
         <RowVisual project={project} />
-      </div>
+      </Parallax>
     </Link>
   );
 }

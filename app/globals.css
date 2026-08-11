@@ -187,6 +187,26 @@
   mix-blend-mode: screen;
 }
 
+/* The headline's arrival, in CSS rather than JavaScript.
+ *
+ * The element is painted in full on the very first frame and only its position
+ * is animated, so this costs nothing in Largest Contentful Paint and cannot
+ * produce the double-take a hydration-driven reveal would: with the text already
+ * on screen at first paint, a script that later hid it to animate it in would
+ * make the headline appear, leave, and arrive again. Travel only, no fade. */
+@keyframes rise-into-place {
+  from {
+    transform: translateY(0.14em);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.rise-into-place {
+  animation: rise-into-place 0.85s var(--ease-out) both;
+}
+
 /* Reduced motion keeps colour and opacity feedback — it removes travel, not
    every sign that the interface responded. */
 @media (prefers-reduced-motion: reduce) {

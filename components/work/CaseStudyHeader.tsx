@@ -24,7 +24,7 @@ export function CaseStudyHeader({ project }: { project: Project }) {
 
       <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-8">
-          <h1 className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
+          <h1 className="rise-into-place max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
             {project.title}
           </h1>
           <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-ink-muted">

@@ -4,6 +4,7 @@ import { CaseStudyHeader } from "@/components/work/CaseStudyHeader";
 import { CaseStudySection } from "@/components/work/CaseStudySection";
 import { CaseStudyNav } from "@/components/work/CaseStudyNav";
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
+import { MetricValue } from "@/components/ui/MetricValue";
 import { projects, getProjectBySlug } from "@/data/projects";
 
 export function generateStaticParams() {
@@ -55,7 +56,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                     {metric.label}
                   </dt>
                   <dd className="measure text-2xl font-medium leading-tight tracking-tight text-measure">
-                    {metric.value}
+                    <MetricValue value={metric.value} />
                   </dd>
                 </div>
               ))}

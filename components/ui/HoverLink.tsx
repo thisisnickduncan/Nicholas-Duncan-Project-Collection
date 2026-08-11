@@ -25,7 +25,7 @@ export function HoverLink({
       {children}
       <span
         aria-hidden="true"
-        className="hover-motion absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-[var(--duration-slow)] ease-[var(--ease-out)] group-hover:scale-x-100 group-focus-visible:scale-x-100"
+        className="hover-motion absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-[var(--duration-base)] ease-[var(--ease-out)] group-hover:scale-x-100 group-focus-visible:scale-x-100"
       />
     </>
   );

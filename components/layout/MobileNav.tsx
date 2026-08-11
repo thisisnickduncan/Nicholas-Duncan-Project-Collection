@@ -49,10 +49,14 @@ export function MobileNav() {
         aria-controls={panelId}
         className="relative flex h-9 w-9 cursor-pointer items-center justify-center border border-rule text-ink transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:border-rule-strong active:bg-surface"
       >
+        {/* All three bars sit centred and are moved apart with transforms rather
+            than by animating `top`, so opening the menu never triggers layout. */}
         <span aria-hidden="true" className="relative block h-3 w-4">
           <span
-            className={`absolute left-0 h-px w-full bg-current transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] ${
-              open ? "top-1/2 rotate-45" : "top-0"
+            className={`absolute left-0 top-1/2 h-px w-full bg-current transition-transform duration-[var(--duration-base)] ease-[var(--ease-out)] ${
+              open
+                ? "[transform:translateY(-50%)_rotate(45deg)]"
+                : "[transform:translateY(calc(-50%-5px))]"
             }`}
           />
           <span
@@ -61,17 +65,22 @@ export function MobileNav() {
             }`}
           />
           <span
-            className={`absolute left-0 h-px w-full bg-current transition-all duration-[var(--duration-base)] ease-[var(--ease-out)] ${
-              open ? "top-1/2 -rotate-45" : "top-full -translate-y-px"
+            className={`absolute left-0 top-1/2 h-px w-full bg-current transition-transform duration-[var(--duration-base)] ease-[var(--ease-out)] ${
+              open
+                ? "[transform:translateY(-50%)_rotate(-45deg)]"
+                : "[transform:translateY(calc(-50%+5px))]"
             }`}
           />
         </span>
       </button>
 
+      {/* Solid, not translucent. The header is a bar you scroll content under, but
+          a menu is a surface you read off: at 95% opacity the page heading ghosted
+          through the links, and the backdrop blur was paying for the privilege. */}
       {open && (
         <div
           id={panelId}
-          className="absolute inset-x-0 top-full border-b border-rule bg-paper/95 px-4 py-5 backdrop-blur-md"
+          className="absolute inset-x-0 top-full border-b border-rule bg-paper px-4 py-5"
         >
           <nav aria-label="Main" className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => {

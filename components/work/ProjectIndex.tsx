@@ -32,7 +32,7 @@ export function ProjectIndex({ intro }: { intro: string }) {
               type="button"
               onClick={() => setActive(filter)}
               aria-pressed={isActive}
-              className={`measure cursor-pointer border px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.14em] transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)] ${
+              className={`measure cursor-pointer border px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.14em] transition-[background-color,border-color,color,transform] duration-[var(--duration-fast)] ease-[var(--ease-out)] active:scale-[0.98] ${
                 isActive
                   ? "border-ink bg-ink text-paper"
                   : "border-rule text-ink-muted hover:border-rule-strong hover:text-ink"

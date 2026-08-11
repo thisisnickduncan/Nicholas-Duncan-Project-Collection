@@ -39,27 +39,33 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <CaseStudySection label="Approach">
         <p>{project.approach}</p>
       </CaseStudySection>
-      <CaseStudySection label="Outcome">
+      <CaseStudySection
+        label="Outcome"
+        footer={
+          project.outcomeMetrics && (
+            <dl className="mt-12 grid grid-cols-1 border-t border-rule-strong sm:grid-cols-3">
+              {project.outcomeMetrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="flex h-full flex-col justify-between gap-3 border-b border-rule py-5 sm:border-b-0 sm:border-r sm:px-5 sm:py-6 sm:first:pl-0 sm:last:border-r-0"
+                >
+                  {/* Labels are pushed to the bottom of the stretched cell so a value
+                      that wraps cannot drop its label below its neighbours. */}
+                  <dt className="measure order-last text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
+                    {metric.label}
+                  </dt>
+                  <dd className="measure text-2xl font-medium leading-tight tracking-tight text-measure">
+                    {metric.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+      >
         {project.outcome.map((paragraph, i) => (
           <p key={i}>{paragraph}</p>
         ))}
-        {project.outcomeMetrics && (
-          <dl className="mt-10 grid grid-cols-1 border-t border-rule-strong sm:grid-cols-3">
-            {project.outcomeMetrics.map((metric) => (
-              <div
-                key={metric.label}
-                className="border-b border-rule py-5 sm:border-b-0 sm:border-r sm:px-5 sm:py-6 sm:first:pl-0 sm:last:border-r-0"
-              >
-                <dd className="measure text-2xl font-medium leading-none tracking-tight text-measure">
-                  {metric.value}
-                </dd>
-                <dt className="measure mt-3 text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
-                  {metric.label}
-                </dt>
-              </div>
-            ))}
-          </dl>
-        )}
       </CaseStudySection>
       <CaseStudyNav currentSlug={project.slug} />
     </>

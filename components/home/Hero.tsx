@@ -73,14 +73,14 @@ export function Hero() {
           {highlights.map((metric) => (
             <div
               key={`${metric.slug}-${metric.label}`}
-              className="border-b border-rule py-5 sm:border-b-0 sm:border-r sm:px-6 sm:py-6 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
+              className="flex h-full flex-col justify-between gap-3 border-b border-rule py-5 sm:border-b-0 sm:border-r sm:px-6 sm:py-6 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
             >
-              <dd className="measure text-[clamp(1.5rem,2.4vw,2rem)] font-medium leading-none tracking-tight text-measure">
-                {metric.value}
-              </dd>
-              <dt className="measure mt-3 text-xs uppercase tracking-[0.14em] text-ink-muted">
+              <dt className="measure order-last text-xs uppercase tracking-[0.14em] text-ink-muted">
                 {metric.label}
               </dt>
+              <dd className="measure text-[clamp(1.5rem,2.4vw,2rem)] font-medium leading-tight tracking-tight text-measure">
+                {metric.value}
+              </dd>
             </div>
           ))}
         </dl>

@@ -1,9 +1,11 @@
 import Image from "next/image";
 
 /**
- * Shows a product screenshot at its own aspect ratio, centered on the raised panel.
+ * Shows a product screenshot at its own aspect ratio, in a frame that hugs it.
  * Unlike a cover crop this never trims the image, which matters for phone captures
- * where cover would reduce a tall screenshot to a horizontal band.
+ * where cover would reduce a tall screenshot to a horizontal band. The frame takes
+ * its width from the image rather than from the column, so a portrait capture gets
+ * a portrait panel instead of floating in a landscape box of empty surface.
  */
 export function ScreenshotPanel({
   src,
@@ -24,7 +26,7 @@ export function ScreenshotPanel({
 }) {
   return (
     <figure className={className}>
-      <div className="flex justify-center border border-rule bg-surface px-4 py-8 sm:px-6 sm:py-12">
+      <div className="flex w-fit max-w-full justify-center border border-rule bg-surface px-4 py-8 sm:px-6 sm:py-12">
         <Image
           src={src}
           alt={alt}

@@ -6,18 +6,22 @@ import { categoryLabel, type Project } from "@/data/projects";
  * Every row carries something true in its visual slot: a real screenshot where one
  * exists, otherwise the project's own measurements. Nothing here is a generated
  * placeholder standing in for content that does not exist.
+ *
+ * The two cases deliberately do not share a shape. A screenshot gets a frame sized
+ * to the screenshot; measurements get set as type. Forcing both into one fixed
+ * rectangle left whichever one did not fit floating in dead space.
  */
 function RowVisual({ project }: { project: Project }) {
   if (project.screenshot) {
     return (
-      <div className="flex aspect-[16/10] items-center justify-center overflow-hidden border border-rule bg-surface p-5">
+      <div className="flex w-fit max-w-full justify-center border border-rule bg-surface p-4">
         <Image
           src={project.screenshot.src}
           alt=""
           width={project.screenshot.width}
           height={project.screenshot.height}
           sizes="(min-width: 1024px) 30vw, 90vw"
-          className="h-full w-auto max-w-full object-contain"
+          className="h-auto max-h-64 w-auto max-w-full"
         />
       </div>
     );
@@ -25,15 +29,17 @@ function RowVisual({ project }: { project: Project }) {
 
   if (project.outcomeMetrics?.length) {
     return (
-      <dl className="flex aspect-[16/10] flex-col justify-center gap-4 border border-rule bg-surface px-6 py-6">
+      <dl className="grid grid-cols-1 gap-x-6 gap-y-5 border-t border-rule-strong pt-5 sm:grid-cols-2 lg:grid-cols-1">
         {project.outcomeMetrics.slice(0, 2).map((metric) => (
-          <div key={metric.label}>
-            <dd className="measure text-xl font-medium leading-none tracking-tight text-measure">
-              {metric.value}
-            </dd>
-            <dt className="measure mt-2 text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
+          <div key={metric.label} className="flex flex-col gap-2">
+            {/* Label first in the DOM so each pair is a valid dt-then-dd, moved
+                last visually so the measurement is what the eye reaches first. */}
+            <dt className="measure order-last text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">
               {metric.label}
             </dt>
+            <dd className="measure text-[clamp(1.375rem,2vw,1.75rem)] font-medium leading-tight tracking-tight text-measure">
+              {metric.value}
+            </dd>
           </div>
         ))}
       </dl>
@@ -47,7 +53,7 @@ export function ProjectRow({ project }: { project: Project }) {
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="group grid grid-cols-1 items-center gap-6 border-t border-rule py-8 transition-colors duration-[var(--duration-base)] ease-[var(--ease-out)] first:border-t-0 hover:bg-surface lg:grid-cols-12 lg:gap-8 lg:px-4"
+      className="group grid grid-cols-1 items-start gap-6 border-t border-rule py-8 transition-colors duration-[var(--duration-base)] ease-[var(--ease-out)] first:border-t-0 hover:bg-surface lg:grid-cols-12 lg:gap-8 lg:px-4"
     >
       <div className="lg:col-span-7">
         <h3 className="font-display text-[clamp(1.5rem,2.6vw,2.25rem)] font-semibold leading-tight tracking-[-0.03em] text-ink">

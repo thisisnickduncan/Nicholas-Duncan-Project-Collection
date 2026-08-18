@@ -68,16 +68,10 @@ export function ProjectBand({ project }: { project: Project }) {
               <dt className="measure order-last text-[0.6875rem] uppercase tracking-[0.16em] text-ink-muted">
                 {metric.label}
               </dt>
-              <dd
-                className={`measure font-medium leading-[1.08] tracking-[-0.02em] text-measure ${
-                  /* A figure and a phrase are not the same kind of value. Set at
-                     one size the sentences swamp the numbers they sit beside,
-                     which inverts what the strip is for. */
-                  metric.value.length > 12
-                    ? "text-[clamp(1.25rem,2.1vw,1.75rem)]"
-                    : "text-[clamp(1.75rem,3.4vw,3rem)]"
-                }`}
-              >
+              {/* One size for all three cells. A strip whose figures are set at
+                  different sizes reads as a ranking the numbers do not carry,
+                  so the type stays level and the values do the talking. */}
+              <dd className="measure text-[clamp(1.5rem,2.6vw,2.25rem)] font-medium leading-[1.08] tracking-[-0.02em] text-measure">
                 <MetricValue value={metric.value} />
               </dd>
             </div>

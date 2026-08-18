@@ -46,8 +46,6 @@ export function AboutIntro() {
               </Fact>
             ))}
 
-            <Fact label="Based in">{profile.location}</Fact>
-
             <Fact label="Certifications">
               {profile.certifications.map((cert) => (
                 <span key={cert} className="block">
@@ -55,6 +53,8 @@ export function AboutIntro() {
                 </span>
               ))}
             </Fact>
+
+            <Fact label="Based in">{profile.location}</Fact>
           </dl>
         </RevealOnScroll>
       </div>

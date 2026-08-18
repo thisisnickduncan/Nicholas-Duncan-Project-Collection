@@ -28,9 +28,9 @@ export function Hero() {
             <span className="font-medium text-ink">{profile.name}</span> — {profile.oneLineBio}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-medium">
+          <div className="mt-8 text-sm font-medium">
             <HoverLink href="/work">View selected work &rarr;</HoverLink>
-            <span className="measure text-xs uppercase tracking-widest text-ink-muted">
+            <span className="measure mt-7 block text-xs uppercase tracking-widest text-ink-muted">
               {profile.location}
             </span>
           </div>

@@ -2,6 +2,7 @@
 import { HoverLink } from "@/components/ui/HoverLink";
 import { IframeEmbed } from "@/components/work/IframeEmbed";
 import { ScreenshotPanel } from "@/components/work/ScreenshotPanel";
+import { ScreenshotRow } from "@/components/work/ScreenshotRow";
 import { categoryLabel, type Project } from "@/data/projects";
 
 function Fact({ label, value }: { label: string; value: string }) {
@@ -82,6 +83,7 @@ export function CaseStudyHeader({ project }: { project: Project }) {
             src={project.paperUrl}
             title={`${project.title} — full paper`}
             linkLabel="Download the paper (PDF)"
+            fallback="Phone browsers won't display a PDF inline. Open the paper directly."
           />
         </RevealOnScroll>
       ) : project.demoUrl ? (
@@ -90,6 +92,20 @@ export function CaseStudyHeader({ project }: { project: Project }) {
             src={project.demoUrl}
             title={`${project.title} — live demo`}
             linkLabel="Open the live demo"
+            fallback="The demo runs on a free host that sleeps between visits and takes about a minute to wake."
+          />
+        </RevealOnScroll>
+      ) : project.screenshots ? (
+        <RevealOnScroll className="mt-14 w-full">
+          <ScreenshotRow
+            shots={project.screenshots.map((shot, i) => ({
+              src: shot.src,
+              width: shot.width,
+              height: shot.height,
+              alt: `${project.title} — screenshot ${i + 1}`,
+            }))}
+            caption={project.screenshots.find((shot) => shot.caption)?.caption}
+            priority
           />
         </RevealOnScroll>
       ) : project.screenshot ? (

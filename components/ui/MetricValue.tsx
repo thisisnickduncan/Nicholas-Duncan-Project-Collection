@@ -30,6 +30,15 @@ export function MetricValue({ value, className = "" }: { value: string; classNam
     setAnimate(true);
   }, []);
 
+  /* A measurement is not decoration: it has to be on screen whether or not the
+     reveal ever fires. If the observer has not reported this value in view a
+     second after mount, show it anyway. */
+  const [forced, setForced] = useState(false);
+  useEffect(() => {
+    const t = window.setTimeout(() => setForced(true), 1000);
+    return () => window.clearTimeout(t);
+  }, []);
+
   /* Split to words first, then to characters inside each word. Per-character
      inline-blocks are line-break opportunities, so splitting straight to
      characters would let a wrapping value break mid-word. */
@@ -50,37 +59,37 @@ export function MetricValue({ value, className = "" }: { value: string; classNam
      stagger tightens as the string grows and the whole settle stays under 300ms. */
   const step = Math.min(0.028, 0.26 / Math.max(charCount, 1));
 
-  if (!animate || reduced) {
-    return (
-      <span ref={ref} className={className}>
-        {value}
-      </span>
-    );
-  }
+  /* One span, always the same DOM node. Swapping between a plain span and an
+     animated one used to remount the element the in-view observer was watching,
+     and the observer kept watching the detached node — so whichever measurements
+     lost that race never faded in and sat there as an empty cell. */
+  const plain = !animate || reduced;
 
   return (
-    <span ref={ref} className={className} aria-label={value}>
-      {words.map((word, w) => {
-        if (/^\s+$/.test(word)) {
-          return <span key={`s-${w}`}>{word}</span>;
-        }
-        return (
-          <span key={`w-${w}`} className="inline-block whitespace-nowrap">
-            {Array.from(word).map((char, c) => (
-              <motion.span
-                key={`${w}-${c}`}
-                aria-hidden="true"
-                className="inline-block"
-                initial={{ opacity: 0, y: "0.32em" }}
-                animate={inView ? { opacity: 1, y: "0em" } : { opacity: 0, y: "0.32em" }}
-                transition={{ duration: 0.34, delay: (offsets[w] + c) * step, ease: easeOut }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </span>
-        );
-      })}
+    <span ref={ref} className={className} aria-label={plain ? undefined : value}>
+      {plain
+        ? value
+        : words.map((word, w) => {
+            if (/^\s+$/.test(word)) {
+              return <span key={`s-${w}`}>{word}</span>;
+            }
+            return (
+              <span key={`w-${w}`} className="inline-block whitespace-nowrap">
+                {Array.from(word).map((char, c) => (
+                  <motion.span
+                    key={`${w}-${c}`}
+                    aria-hidden="true"
+                    className="inline-block"
+                    initial={{ opacity: 0, y: "0.32em" }}
+                    animate={inView || forced ? { opacity: 1, y: "0em" } : { opacity: 0, y: "0.32em" }}
+                    transition={{ duration: 0.34, delay: (offsets[w] + c) * step, ease: easeOut }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </span>
+            );
+          })}
     </span>
   );
 }

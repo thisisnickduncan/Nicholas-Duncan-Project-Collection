@@ -33,6 +33,8 @@ export interface Project {
   demoUrl?: string;
   /** Absent -> ProjectVisual renders a generated placeholder. Rendered uncropped at its own aspect ratio, so phone captures survive. */
   screenshot?: Screenshot;
+  /** Several captures of one running program, framed together and centred as a set. Takes precedence over `screenshot`. */
+  screenshots?: Screenshot[];
   /** Full paper PDF in /public/papers/. When set, the case study renders an embedded scroll viewer + download link. */
   paperUrl?: string;
   /** Overrides the band's call to action. Defaults to "Read the case study", which
@@ -62,19 +64,23 @@ export const projects: Project[] = [
       "Stories that arrive with a single source are held rather than dropped, and graduate into a later digest labelled 'Now corroborated' if another newsroom picks them up.",
     ],
     outcomeMetrics: [
-      { label: "Corroboration rate", value: "1.2% → 14.1%" },
-      { label: "Outlets bias-rated", value: "8,774" },
-      { label: "Delivery accuracy", value: "On the hour, to the second" },
+      { label: "Raised stories confirmed by 2+ newsrooms to", value: "1.2% → 14.1%" },
+      { label: "Built a bias-rating table covering", value: "8,774 outlets" },
+      { label: "Ship a digest on schedule", value: "6 a day, every 4 hours" },
     ],
     githubUrl: "https://github.com/thisisnickduncan/telegram-news-collector",
     ctaLabel: "Take a look at the program",
-    screenshot: {
-      src: "/projects/telegram-news-collector/digest.png",
-      width: 323,
-      height: 734,
-      caption:
-        "A delivered digest: each story carries its source list, the Left/Center/Right coverage spread, and Follow / Ask / Ignore controls.",
-    },
+    screenshots: [
+      { src: "/projects/telegram-news-collector/digest-1.png", width: 361, height: 685 },
+      { src: "/projects/telegram-news-collector/digest-2.png", width: 370, height: 583 },
+      {
+        src: "/projects/telegram-news-collector/digest-3.png",
+        width: 372,
+        height: 259,
+        caption:
+          "Three moments from the bot: a delivered digest, the Left/Center/Right spread under each story, and a follow-up when a story it was already tracking develops. Every story carries its source list and Follow / Ask / Ignore controls.",
+      },
+    ],
   },
   {
     slug: "swingscore-political-analytics",
@@ -92,9 +98,9 @@ export const projects: Project[] = [
       "The visualizations and ranking logic are built to support data-driven outreach decisions, not just descriptive charts.",
     ],
     outcomeMetrics: [
-      { label: "Rows of data processed", value: "6M+" },
-      { label: "Ranked unit", value: "Counties in swing states" },
-      { label: "Status", value: "Live, public demo" },
+      { label: "Cleaned and merged public data", value: "6M+ rows" },
+      { label: "Scored every county in", value: "7 swing states" },
+      { label: "Ranked the top-impact counties", value: "5 of 400+" },
     ],
     githubUrl: "https://github.com/thisisnickduncan/Political-Swing-Score-Calculator",
     demoUrl: "https://itm352-swingscore.onrender.com/",
@@ -122,9 +128,9 @@ export const projects: Project[] = [
       "Proposed concrete corrective lessons: binding no-go criteria for unproven conditions, safety authority structurally separated from schedule authority, leading-indicator dashboards for risk signals, and redefining project success as safe mission completion rather than on-time launch.",
     ],
     outcomeMetrics: [
-      { label: "PMBOK domains mapped", value: "18" },
-      { label: "Corrective lessons proposed", value: "4" },
-      { label: "Root cause named", value: "Governance, not the O-ring" },
+      { label: "Checked the launch decision against PMBOK domains", value: "6" },
+      { label: "Traced one open risk through every review gate", value: "1" },
+      { label: "Wrote governance fixes so it can't repeat", value: "4" },
     ],
     paperUrl: "/papers/challenger-failed-project-analysis.pdf",
   },
@@ -144,9 +150,9 @@ export const projects: Project[] = [
       "The same schema supports advisors pulling live status across their full caseload — applied, interviewing, or offer — replacing one-on-one status check-ins.",
     ],
     outcomeMetrics: [
-      { label: "Tables in schema", value: "10" },
-      { label: "Matched on", value: "Major + skills" },
-      { label: "Advisor view", value: "Full caseload status" },
+      { label: "Cut the places a student must search", value: "4 → 1" },
+      { label: "Designed the schema behind the matching", value: "10 tables" },
+      { label: "Replaced advisor check-ins with", value: "1 query per caseload" },
     ],
     paperUrl: "/papers/internship-matching-database.pdf",
     ctaLabel: "Read the proposal",
@@ -172,9 +178,9 @@ export const projects: Project[] = [
       "Modeled a lean, service-based financial structure with a clear path to profitability, and built out the operating systems, launch phases, and partnership roadmap the business is now executing against.",
     ],
     outcomeMetrics: [
-      { label: "Beachhead TAM", value: "$12.49M/yr" },
-      { label: "Year 1 net profit (projected)", value: "$13,740" },
-      { label: "Stage", value: "Operating, paid bookings" },
+      { label: "Sized the beachhead market at", value: "$12.49M/yr" },
+      { label: "Modeled Year 1 net profit at", value: "$13,740" },
+      { label: "Secured funding to open", value: "Founder capital + UH grant" },
     ],
     paperUrl: "/papers/kai-motion.pdf",
   },
@@ -201,9 +207,9 @@ export const projects: Project[] = [
       "Defined a phased path from feasibility through design, permitting, construction, testing, deployment, and closeout, with risk mitigations for budget overrun, construction-period parking loss, and stakeholder resistance.",
     ],
     outcomeMetrics: [
-      { label: "Net capacity gain", value: "~70-100 → 320 spaces" },
-      { label: "Estimated project cost", value: "$13M–$18M" },
-      { label: "Delivery timeline", value: "30 months, six phases" },
+      { label: "Designed more parking on the same land", value: "70–100 → 320 spaces" },
+      { label: "Costed the build at", value: "$13M–$18M" },
+      { label: "Scheduled delivery across", value: "30 months, six phases" },
     ],
     paperUrl: "/papers/central-campus-parking-redevelopment.pdf",
   },
@@ -231,9 +237,9 @@ export const projects: Project[] = [
       "Laid out a phased 24-month rollout — freeze unsafe scaling and baseline metrics in the first 90 days, integrate Spirit and standardize quality in months 3–6, then institutionalize the scorecard into annual planning through month 24.",
     ],
     outcomeMetrics: [
-      { label: "Strategic frameworks applied", value: "4" },
-      { label: "Board recommendations", value: "5" },
-      { label: "Implementation phases", value: "90-day / 6-mo / 24-mo" },
+      { label: "Modeled recovery paths", value: "3 — safety-first won" },
+      { label: "Recommended merging the quality systems", value: "2 → 1" },
+      { label: "Phased the rollout across", value: "24 months, 3 phases" },
     ],
     paperUrl: "/papers/boeing-balanced-scorecard.pdf",
   },

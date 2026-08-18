@@ -9,9 +9,9 @@ export const contentType = "image/png";
 /** The same three measurements the hero leads with, so the share card and the page
  *  make the same argument. */
 const HIGHLIGHTS = [
-  { slug: "swingscore-political-analytics", label: "Rows of data processed" },
-  { slug: "telegram-news-collector", label: "Corroboration rate" },
-  { slug: "telegram-news-collector", label: "Outlets bias-rated" },
+  { slug: "swingscore-political-analytics", label: "Cleaned and merged public data" },
+  { slug: "telegram-news-collector", label: "Raised stories confirmed by 2+ newsrooms to" },
+  { slug: "telegram-news-collector", label: "Built a bias-rating table covering" },
 ];
 
 export default function OpengraphImage() {

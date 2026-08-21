@@ -10,7 +10,7 @@ type Filter = ProjectCategory | "All";
 /** Only offer a category that something is actually filed under, so the filter bar
  *  can never lead to an empty page. */
 const populated = new Set<ProjectCategory>(projects.map((p) => p.category));
-const filters: Filter[] = ["All", ...(["IT", "PM", "Data", "Security"] as ProjectCategory[]).filter((c) => populated.has(c))];
+const filters: Filter[] = ["All", ...(["IT", "PM", "Data", "Crypto", "Security"] as ProjectCategory[]).filter((c) => populated.has(c))];
 
 export function ProjectIndex({ intro }: { intro: string }) {
   const [active, setActive] = useState<Filter>("All");

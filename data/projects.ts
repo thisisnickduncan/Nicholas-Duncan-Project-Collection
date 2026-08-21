@@ -1,7 +1,11 @@
-export type ProjectCategory = "IT" | "PM" | "Data" | "Security";
+export type ProjectCategory = "IT" | "PM" | "Data" | "Crypto" | "Security";
 
+/** Two categories carry a short code in the data and a longer name on screen, so the
+ *  filter bar and the case-study fact list can never drift apart. */
 export function categoryLabel(category: ProjectCategory): string {
-  return category === "PM" ? "Project Management" : category;
+  if (category === "PM") return "Project Management";
+  if (category === "Crypto") return "Crypto Analysis";
+  return category;
 }
 
 export interface OutcomeMetric {
@@ -105,6 +109,38 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/thisisnickduncan/Political-Swing-Score-Calculator",
     demoUrl: "https://itm352-swingscore.onrender.com/",
     ctaLabel: "Take a look at the program",
+  },
+  {
+    slug: "follow-the-coin",
+    title: "Follow the Coin: Reconstructing a Five-Hop Bitcoin Fund Flow",
+    oneLiner: "A blockchain investigation exercise that follows 0.00342052 tBTC across five confirmed hops on Bitcoin Testnet4 — deciding which output was a payment and which was change, and proving that an address the trail appeared to dead-end at was the same wallet all along.",
+    category: "Crypto",
+    role: "Sole author — built the trail, ran the analysis, wrote the report",
+    tools: [
+      "Bitcoin Testnet4",
+      "mempool.space Block Explorer",
+      "Sparrow Wallet",
+      "Gamma",
+      "Common-Input-Ownership Heuristic",
+      "Change-Output Identification",
+      "UTXO Value Reconciliation",
+    ],
+    problem:
+      "Every Bitcoin transaction is public, which makes tracing funds sound like it should be trivial. It is not, because the ledger records amounts and addresses and labels nothing. When one transaction produces two outputs, nothing on-chain says which one was the payment and which was change coming back to the sender — and following the wrong one loses the money. When a hop lands on an address that has never appeared before, that transaction alone cannot tell you whether the trail has branched to a different party or is still in the same hands. The exercise was to reconstruct a five-hop trail from two facts only, a starting address and a destination, and to make both of those calls from block-explorer data alone.",
+    approach:
+      "Built the trail first — four Sparrow wallets on Testnet4, funded from a public faucet — then analysed it from scratch as though the wallets belonged to someone else, working only from mempool.space and deliberately not consulting the wallet software, which would have answered the payment-versus-change question by a shortcut no real case offers. At the Hop 3 split the payment was identified from a round-number pattern and confirmed by arithmetic (input minus payment minus fee matched the second output to the satoshi), and the two tests that could have corroborated it — the fresh-address test and the address-type test — were written up as having produced nothing rather than quietly dropped, so the finding is stated with exactly the support it has. The change output was then followed forward instead of being written off, which is how the trail reached the apparent dead end at D2 and, one hop later, resolved it: D1 and D2 were spent together in a single transaction, and since spending an input requires its private key, common control is structural rather than inferred. Fee behaviour and the trail's suspiciously even forty-minute rhythm were both examined and both cleared — Testnet4 simply produces a block about every twenty minutes. I developed the report itself in Gamma, my first time using the tool, which is what let me set twelve block-explorer exhibits, a full fund-flow diagram, and a per-hop determination table into one document at a level of finish I would not have reached laying it out by hand.",
+    outcome: [
+      "Closed the trail on-chain: 0.00342052 tBTC entered at Address A1 and 0.00340727 tBTC came to rest at Address D1 across five confirmed transactions in blocks 149,356 to 149,364, a span of two hours and forty minutes. The 1,325-satoshi difference is exactly the total fees paid, so no value is unexplained, and every transaction ID is listed for independent verification on mempool.space.",
+      "Resolved the apparent dead end, which is the evidential core of the case. The Hop 3 change output moved on to D2, an address with no visible link to the known destination. Hop 5 spent D1 and D2 together into a single consolidated output, which under the common-input-ownership heuristic puts both addresses in the same hands — and CoinJoin, the one exception that would weaken that, was ruled out on the transaction's structure.",
+      "Recorded what the evidence would not support as carefully as what it would: no attribution was attempted, the fee data across a tenfold rate range was found to carry no investigative signal, the even intervals were network cadence rather than automation, and a Hop 2 fee-bump that the explorer displays as a 'removed' transaction never confirmed and never moved any funds.",
+      "Stated the limits plainly in the report itself — the author controls every wallet in the trail, so this demonstrates the method rather than the outcome of a real case, and Testnet4's light traffic made the trail cleaner to follow than mainnet would be.",
+    ],
+    outcomeMetrics: [
+      { label: "Followed the funds through", value: "5 hops, 6 addresses" },
+      { label: "Left unaccounted for", value: "0 of 342,052 sats" },
+      { label: "Evidenced each determination with", value: "12 explorer exhibits" },
+    ],
+    paperUrl: "/papers/follow-the-coin.pdf",
   },
   {
     slug: "challenger-failed-project-analysis",
